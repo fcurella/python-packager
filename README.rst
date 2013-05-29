@@ -45,10 +45,16 @@ Required. The organization licensing the code. Most of the time this will be the
 
 ``--template-dir``
 ~~~~~~~~~~~~~~~~~~
-Optional. The directory that will be used as template. Single files will be rendered using ``pystache``. The rendering context will contain every setting specified, plus a ``package_name`` variable containing the package name.
+Optional. The directory that will be used as template.
+
+Single files will be rendered using ``pystache``.
+
+The rendering context will contain every setting specified, plus a ``package_name`` variable containing the package name.
+
+The special directory ``__package_name__`` will be renamed to the package's name.
 
 ``--script``
-~~~~~~~~~~
+~~~~~~~~~~~~
 (alias of ``--script-prerender``)
 
 ``--script-prerender``
