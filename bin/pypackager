@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+import os
+import sys
+from optparse import OptionParser
+
+from pypackager.settings import SettingsReader
+from pypackager.packager import PackageCreator
+from pypackager.utils import unflatten_dict
+
+
+usage = """"""
+parser = OptionParser(usage=usage)
+parser.add_option("--template", dest="template-dir",
+                  help="")
+parser.add_option("--template-dir", dest="template-dir",
+                  help="")
+parser.add_option("--author", dest="author-name",
+                  help="")
+parser.add_option("--author-name", dest="author-name",
+                  help="")
+parser.add_option("--author-email-address", dest="author-email",
+                  help="")
+parser.add_option("--license", dest="license-type",
+                  help="")
+parser.add_option("--license-type", dest="license-type",
+                  help="")
+parser.add_option("--license-organization", dest="license-organization",
+                  help="")
+parser.add_option("--template", dest="template-dir",
+                  help="")
+parser.add_option("--template-dir", dest="template-dir",
+                  help="")
+parser.add_option("--script", dest="script-prerender",
+                  help="")
+parser.add_option("--script-prerender", dest="script-prerender",
+                  help="")
+parser.add_option("--script-postrender", dest="script-postrender",
+                  help="")
+
+
+class Pypackager(object):
+    def __init__(self, package_name, **kwargs):
+        self.settings = SettingsReader(**kwargs)
+        self.settings['package_name'] = package_name
+        super(Pypackager, self).__init__()
+
+    def create(self):
+        destination = os.path.join(os.path.abspath('.'), self.settings['package_name'])
+        creator = PackageCreator(settings=self.settings)
+        creator.create(destination)
+
+
+if __name__ == "__main__":
+    (options, args) = parser.parse_args()
+    kwargs = unflatten_dict(vars(options))
+    packager = Pypackager(package_name=sys.argv[1], **kwargs)
+    packager.create()
+    sys.exit(0)

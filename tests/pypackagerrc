@@ -1,0 +1,7 @@
+[author]
+name = John Smith
+email = john.smith@gmail.com
+
+[license]
+type = mit
+organization = John Smith

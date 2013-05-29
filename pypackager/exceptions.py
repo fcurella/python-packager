@@ -1,0 +1,2 @@
+class DestinationExists(Exception):
+    pass

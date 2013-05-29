@@ -1,0 +1,8 @@
+{{ package_name }} is written and maintained by {{ author.name }} and
+various contributors:
+
+Development Lead
+~~~~~~~~~~~~~~~~
+
+- {{ author.name }} <{{ author.email }}>
+

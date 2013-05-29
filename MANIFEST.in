@@ -1,0 +1,8 @@
+recursive-include tests *.py
+
+include AUTHORS
+include LICENSE
+include REQUIREMENTS
+include README.rst
+
+recursive-include pypackager/skeleton *
