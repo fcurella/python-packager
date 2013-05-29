@@ -1,8 +1,6 @@
 import os
 from setuptools import setup, find_packages
 
-from myapp import __version__
-
 
 def read(fname):
     try:
@@ -16,7 +14,7 @@ requirements = read('REQUIREMENTS').splitlines()
 
 setup(
     name="python-packager",
-    version=".".join(map(str, __version__)),
+    version="0.0.1",
     description="A command-line tool to create Python Packages.",
     long_description=read('README.rst'),
     url='https://github.com/fcurella/python-packager',
