@@ -75,6 +75,11 @@ To store your options (so you don't have to type the every time) you can write t
     prerender = ~/.pypackager/my_prerender_script.sh
     postrender = ~/.pypackager/my_postrender_script.sh
 
+Status
+======
+
+This software should be considered Alpha.
+
 License
 =======
 This project is released under the MIT License.
