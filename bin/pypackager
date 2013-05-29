@@ -10,10 +10,6 @@ from pypackager.utils import unflatten_dict
 
 usage = """"""
 parser = OptionParser(usage=usage)
-parser.add_option("--template", dest="template-dir",
-                  help="")
-parser.add_option("--template-dir", dest="template-dir",
-                  help="")
 parser.add_option("--author", dest="author-name",
                   help="")
 parser.add_option("--author-name", dest="author-name",
