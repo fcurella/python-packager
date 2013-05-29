@@ -3,6 +3,8 @@ Python Packager
 
 A command-line tool to create Python Packages.
 
+It's intended as a quick way to create new Python packages. It is not a maintenance tool.
+
 Usage::
 
     $ pip install python-packager
