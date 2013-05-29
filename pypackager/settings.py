@@ -13,13 +13,13 @@ class SettingsReader(dict):
             self.config_file = config_file
         parser = SafeConfigParser()
 
-        with open(self.config_file) as fh:
-            parser.readfp(fh)
+        if os.path.exists(self.config_file):
+            with open(self.config_file) as fh:
+                parser.readfp(fh)
 
-        _kwargs = {}
-        for section in parser.sections():
-            # if none
-            _kwargs[section] = dict(parser.items(section))
+            _kwargs = {}
+            for section in parser.sections():
+                _kwargs[section] = dict(parser.items(section))
 
         _kwargs.update(clean_dict(kwargs))
         if 'license' in _kwargs:
