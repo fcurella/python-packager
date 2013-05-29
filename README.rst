@@ -76,7 +76,7 @@ To store your options (so you don't have to type them every time) you can write 
     email = john.smith@example.com
 
     [license]
-    type = bsd
+    type = bsd3
     organization = John Smith
 
     [scripts]

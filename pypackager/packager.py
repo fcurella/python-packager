@@ -41,6 +41,10 @@ class PackageCreator(BasePackager):
             fh.write(content)
 
     def create(self, destination):
+        exit_code = self.create_license(destination, dry_run=True)
+        if exit_code != 0:
+            return
+
         scripts = self.settings.get('script', None)
         if scripts and 'prerender' in scripts:
             self.execute_script(scripts['prerender'], self.settings['package_name'], destination)
@@ -55,10 +59,14 @@ class PackageCreator(BasePackager):
         _args = (os.path.expanduser(script),) + args
         subprocess.call(' '.join(_args), shell=True, executable="/bin/bash")
 
-    def create_license(self, destination):
+    def create_license(self, destination, dry_run=False):
         args = ['lice', self.settings['license']['type'], '-p', destination]
         organization = self.settings['license'].get('organization', None)
         if organization:
             args += ['-o', organization]
-        with open(os.path.join(destination, 'LICENSE'), 'w') as fh:
-            subprocess.call(args, stdout=fh)
+        if dry_run:
+            stdout = os.devnull
+        else:
+            stdout = os.path.join(destination, 'LICENSE')
+        with open(stdout, 'w') as fh:
+            return subprocess.call(args, stdout=fh)
