@@ -69,7 +69,7 @@ Optional. If enabled, the specified script will be called after files are render
 
 Storing options
 ---------------
-To store your options (so you don't have to type the every time) you can write them into a file called ``~/.pypackager/pypackager.cfg``::
+To store your options (so you don't have to type them every time) you can write them into a file called ``~/.pypackager/pypackager.cfg``::
 
     [author]
     name = John Smith
