@@ -28,5 +28,6 @@ class SettingsReader(dict):
                 _kwargs['license']['classifier'] = LICENSES[license_shortname]
                 _kwargs['license']['name'] = LICENSES[license_shortname].split('::')[-1].strip()
             else:
+                _kwargs['license']['classifier'] = LICENSES['other']
                 _kwargs['license']['name'] = license_shortname
         super(SettingsReader, self).__init__(**_kwargs)

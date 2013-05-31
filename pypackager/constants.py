@@ -12,5 +12,6 @@ LICENSES = {
     'lgpl': 'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
     'mit': 'License :: OSI Approved :: MIT License',
     'mpl': 'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
-    'zlib': 'License :: OSI Approved :: zlib/libpng License'
+    'zlib': 'License :: OSI Approved :: zlib/libpng License',
+    'other': 'License :: Other/Proprietary License',
 }
