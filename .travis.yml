@@ -1,0 +1,11 @@
+language: python
+install:
+  - pip install -r REQUIREMENTS --use-mirrors
+before_script:
+  - "export PYTHONPATH=$TRAVIS_BUILD_DIR:$PYTHONPATH;"
+python:
+  - "2.6"
+  - "2.7"
+virtualenv:
+  system_site_packages: true
+script: python -m unittest2 discover
