@@ -13,11 +13,11 @@ class SettingsReader(dict):
             self.config_file = config_file
         parser = SafeConfigParser()
 
+        _kwargs = {}
         if os.path.exists(self.config_file):
             with open(self.config_file) as fh:
                 parser.readfp(fh)
 
-            _kwargs = {}
             for section in parser.sections():
                 _kwargs[section] = dict(parser.items(section))
 
