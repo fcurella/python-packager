@@ -11,6 +11,7 @@ def read(fname):
 
 
 requirements = read('REQUIREMENTS').splitlines()
+tests_requirements = read('TEST-REQUIREMENTS').splitlines()
 
 setup(
     name="python-packager",
@@ -34,4 +35,5 @@ setup(
     ],
     scripts=['bin/pypackager'],
     install_requires=requirements,
+    tests_require=tests_requirements,
 )
