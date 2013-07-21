@@ -1,6 +1,5 @@
 import os
 import subprocess
-import shutil
 
 from .base import BasePackager
 from .render import FileRenderer
@@ -8,13 +7,12 @@ from .exceptions import DestinationExists
 
 
 class PackageCreator(BasePackager):
-    template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template')
+    blacklist = ('.package.cfg',)
 
     def __init__(self, **kwargs):
         super(PackageCreator, self).__init__(**kwargs)
+        self.template_dir = self.settings['template']['dir']
         self.renderer = FileRenderer(self.settings)
-        if 'template' in self.settings:
-            self.template_dir = self.settings['template']['dir']
 
     def copy_skeleton(self, destination, context):
         if os.path.exists(destination):
@@ -22,6 +20,8 @@ class PackageCreator(BasePackager):
 
         for root, dirnames, filenames in os.walk(self.template_dir):
             for filename in filenames:
+                if filename in self.blacklist:
+                    continue
                 template = os.path.join(root, filename)
                 relpath = os.path.relpath(template, self.template_dir)
                 output = os.path.join(destination, relpath)

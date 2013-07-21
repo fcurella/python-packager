@@ -15,3 +15,8 @@ LICENSES = {
     'zlib': 'License :: OSI Approved :: zlib/libpng License',
     'other': 'License :: Other/Proprietary License',
 }
+
+RENDERERS = {
+    'pystache': 'pypackager.renderers.Pystache',
+    'jinja2': 'pypackager.renderers.Jinja2'
+}

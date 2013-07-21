@@ -6,7 +6,7 @@ from optparse import OptionParser
 from pypackager.settings import SettingsReader
 from pypackager.packager import PackageCreator
 from pypackager.utils import unflatten_dict
-
+from pypackager.settings import DEFAULTS
 
 usage = """"""
 parser = OptionParser(usage=usage)
@@ -25,7 +25,9 @@ parser.add_option("--license-organization", dest="license-organization",
 parser.add_option("--template", dest="template-dir",
                   help="")
 parser.add_option("--template-dir", dest="template-dir",
-                  help="")
+                  help="", default=DEFAULTS['template']['dir'])
+parser.add_option("--template-syntax", dest="template-syntax",
+                  help="", default=DEFAULTS['template']['syntax'])
 parser.add_option("--script", dest="script-prerender",
                   help="")
 parser.add_option("--script-prerender", dest="script-prerender",
