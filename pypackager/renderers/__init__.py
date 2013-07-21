@@ -1,7 +1,7 @@
 try:
     import pystache
 except ImportError:
-    raise
+    pass
 else:
     class Pystache(object):
         def __init__(self, template_file):
@@ -16,7 +16,7 @@ else:
 try:
     from jinja2 import Template
 except ImportError:
-    raise
+    pass
 else:
     class Jinja2(object):
         def __init__(self, template_file):
