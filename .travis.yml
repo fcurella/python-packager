@@ -3,7 +3,7 @@ install:
   - pip install -r REQUIREMENTS --use-mirrors
   - pip install -r TEST-REQUIREMENTS --use-mirrors
 before_script:
-  - "export PYTHONPATH=$TRAVIS_BUILD_DIR:$PYTHONPATH;"
+  - "python setup.py install"
 python:
   - "2.7"
 script: python -m unittest2 discover
