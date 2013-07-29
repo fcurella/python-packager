@@ -8,11 +8,13 @@ DEFAULTS = {
     'template': {
         'dir': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template'),
         'syntax': 'pystache'
-    }
+    },
+    'index': 'https://raw.github.com/fcurella/pypackager-channel/master/index.json'
 }
 
 
 class SettingsReader(dict):
+    support_dir = os.path.expanduser('~/.pypackager')
     config_file = os.path.expanduser('~/.pypackager/pypackager.cfg')
 
     def __init__(self, config_file=None, *args, **kwargs):
@@ -20,10 +22,21 @@ class SettingsReader(dict):
             self.config_file = config_file
         parser = SafeConfigParser()
 
-        _kwargs = {}
+        _kwargs = {
+            'support_dir': self.support_dir,
+            'template_wrap_dir': 'template'
+        }
 
         if 'template' in _kwargs and 'dir' in _kwargs['template']:
-            package_cfg = os.path.join(_kwargs['template']['dir'], '.package.cfg')
+            template = _kwargs['template']['dir']
+            if os.path.exists(template):
+                template_dir = template
+            elif os.path.exists(os.path.join(self.support_dir, template)):
+                template_dir = os.path.join(self.support_dir, template, _kwargs['template_wrap_dir'])
+            else:
+                raise OSError("template %s does not exist." % template)
+
+            package_cfg = os.path.join(template_dir, '.package.cfg')
             if os.path.exists(package_cfg):
                 with open(package_cfg) as fh:
                     parser.readfp(fh)

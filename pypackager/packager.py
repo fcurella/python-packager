@@ -13,13 +13,19 @@ class Pypackager(object):
     def run(self, action, *args):
         return getattr(self, action)(*args)
 
-    def create(self, package_name):
+    def create(self, package_name, *args):
         destination = os.path.join(os.path.abspath('.'), package_name)
-        creator = PackageCreator(package_name=package_name, settings=self.settings)
-        creator.create(destination)
+        creator = PackageCreator(settings=self.settings)
+        creator.create(package_name, destination)
 
-    def list(self):
+    def list(self, *args):
         channel = PackagerChannel(settings=self.settings)
         channel.list()
 
+    def download(self, package_name, *args):
+        channel = PackagerChannel(settings=self.settings)
+        channel.download(package_name)
 
+    def remove(self, package_name, *args):
+        channel = PackagerChannel(settings=self.settings)
+        channel.remove(package_name)

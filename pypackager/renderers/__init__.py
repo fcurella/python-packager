@@ -4,7 +4,7 @@ except ImportError:
     pass
 else:
     class Pystache(object):
-        def render_string(self, content, context):
+        def render(self, content, context):
             return pystache.render(content, context)
 
 
@@ -14,6 +14,6 @@ except ImportError:
     pass
 else:
     class Jinja2(object):
-        def render_string(self, content, context):
+        def render(self, content, context):
             template = Template(content)
             return template.render(**context)
