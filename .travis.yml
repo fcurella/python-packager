@@ -1,5 +1,6 @@
 language: python
 install:
+  - pip install pip --upgrade
   - pip install -r REQUIREMENTS --use-mirrors
   - pip install -r TEST-REQUIREMENTS --use-mirrors
 before_script:
