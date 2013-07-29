@@ -22,7 +22,7 @@ setup(
     license='MIT',
     author='Flavio Curella',
     author_email='flavio.curella@gmail.com',
-    packages=find_packages(exclude=['tests', 'pypackager.template']),
+    packages=find_packages(exclude=['tests', 'pypackager.template.*']),
     include_package_data=True,
     classifiers=[
         'Development Status :: 3 - Alpha',
