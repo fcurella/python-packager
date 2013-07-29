@@ -13,7 +13,7 @@ def read(fname):
 requirements = read('REQUIREMENTS').splitlines()
 tests_requirements = read('TEST-REQUIREMENTS').splitlines()
 
-os.environ["PYTHONDONTWRITEBYTECODE"] = 1
+os.environ["PYTHONDONTWRITEBYTECODE"] = 'true'
 
 setup(
     name="python-packager",
