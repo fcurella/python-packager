@@ -13,6 +13,8 @@ def read(fname):
 requirements = read('REQUIREMENTS').splitlines()
 tests_requirements = read('TEST-REQUIREMENTS').splitlines()
 
+os.environ["PYTHONDONTWRITEBYTECODE"] = 1
+
 setup(
     name="python-packager",
     version="0.0.5",
@@ -22,7 +24,7 @@ setup(
     license='MIT',
     author='Flavio Curella',
     author_email='flavio.curella@gmail.com',
-    packages=find_packages(exclude=['tests', 'pypackager.template.', 'pypackager.template.*']),
+    packages=find_packages(exclude=['tests']),
     include_package_data=True,
     classifiers=[
         'Development Status :: 3 - Alpha',
