@@ -15,7 +15,7 @@ tests_requirements = read('TEST-REQUIREMENTS').splitlines()
 
 setup(
     name="python-packager",
-    version="0.0.4",
+    version="0.0.5",
     description="A command-line tool to create Python Packages.",
     long_description=read('README.rst'),
     url='https://github.com/fcurella/python-packager',
