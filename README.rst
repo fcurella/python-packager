@@ -8,7 +8,7 @@ It's intended as a quick way to create new Python packages. It is not a maintena
 Usage::
 
     $ pip install python-packager
-    $ pypackager <mypackage> [options]
+    $ pypackager create <mypackage> [options]
 
 This will create a package in your current directory, complete with ``setup.py``, ``AUTHORS`` and ``LICENSE`` files.
 
@@ -44,6 +44,10 @@ Required. The license to include in the code. See `lice <https://github.com/lice
 ``--license-organization``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Required. The organization licensing the code. Most of the time this will be the same as ``--author-name``
+
+``--template``
+~~~~~~~~~~~~~
+(alias of ``--template-dir``)
 
 ``--template-dir``
 ~~~~~~~~~~~~~~~~~~
