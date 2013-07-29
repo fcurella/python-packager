@@ -5,11 +5,17 @@ from .constants import RENDERERS
 from .utils import instantiate_classpath
 
 
-class FileRenderer(BasePackager):
-    def render(self, template_file, context):
+class Renderer(BasePackager):
+    def __init__(self, settings):
+        super(Renderer, self).__init__(settings)
         syntax_adapter = RENDERERS[self.settings['template']['syntax']]
-        template = instantiate_classpath(syntax_adapter, template_file=template_file)
-        return template.render(self.get_context_data(**context))
+        self.template_engine = instantiate_classpath(syntax_adapter)
+
+    def render_file(self, template_file, context):
+        return self.template_engine.render_file(template_file, self.get_context_data(**context))
+
+    def render_string(self, content, context):
+        return self.template_engine.render_string(content, self.get_context_data(**context))
 
     def get_context_data(self, **kwargs):
         kwargs.update({
