@@ -26,7 +26,7 @@ def clean_dict(a_dict):
 
         ret[k] = v
 
-    for k, v in ret.items():
+    for k, v in ret.copy().items():
         if v == {}:
             del ret[k]
     return ret
