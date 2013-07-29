@@ -1,4 +1,5 @@
 import os
+import sys
 from setuptools import setup, find_packages
 
 
@@ -14,7 +15,8 @@ requirements = read('REQUIREMENTS').splitlines()
 tests_requirements = read('TEST-REQUIREMENTS').splitlines()
 
 packages = find_packages(exclude=['tests'])
-print(packages)
+sys.dont_write_bytecode = True
+
 setup(
     name="python-packager",
     version="0.0.5",
