@@ -22,6 +22,10 @@ class Pypackager(object):
         channel = PackagerChannel(settings=self.settings)
         channel.list()
 
+    def search(self, text, *args):
+        channel = PackagerChannel(settings=self.settings)
+        channel.search(text)
+
     def download(self, package_name, *args):
         channel = PackagerChannel(settings=self.settings)
         channel.download(package_name)

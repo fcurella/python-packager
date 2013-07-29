@@ -47,6 +47,11 @@ class PackagerChannel(BasePackager):
         for name, info in self.data.items():
             print(self.template_info(name, info))
 
+    def search(self, text):
+        for name, info in self.data.items():
+            if text in name:
+                print(self.template_info(name, info))
+
     def template_data(self, template_name):
         return self.data[template_name]
 
