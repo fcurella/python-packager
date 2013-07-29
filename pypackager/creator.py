@@ -34,6 +34,7 @@ class PackageCreator(BasePackager):
                 with open(template) as fh:
                     content = fh.read()
                 rendered = self.render(content, context)
+                print(output)
                 with open(output, 'w') as fh:
                     fh.write(rendered)
 
