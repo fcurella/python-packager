@@ -15,6 +15,8 @@ requirements = read('REQUIREMENTS').splitlines()
 tests_requirements = read('TEST-REQUIREMENTS').splitlines()
 
 packages = find_packages(exclude=['tests'])
+
+# Avoid byte-compiling the shipped template
 sys.dont_write_bytecode = True
 
 setup(
