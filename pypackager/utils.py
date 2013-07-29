@@ -21,7 +21,7 @@ def clean_dict(a_dict):
             continue
 
         if isinstance(v, dict):
-            ret[k] = clean_dict(v)
+            ret[k] = clean_dict(v).copy()
             continue
 
         ret[k] = v
@@ -33,7 +33,7 @@ def clean_dict(a_dict):
 
 
 def recursive_update(d, u):
-    for k, v in u.iteritems():
+    for k, v in u.items():
         if isinstance(v, collections.Mapping):
             r = recursive_update(d.get(k, {}), v)
             d[k] = r
