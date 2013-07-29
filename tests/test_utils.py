@@ -1,5 +1,5 @@
 from pypackager import utils
-from unittest2 import TestCase
+from unittest import TestCase
 
 
 class UtilsTests(TestCase):

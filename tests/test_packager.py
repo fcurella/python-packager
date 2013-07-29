@@ -1,5 +1,5 @@
 import os
-from unittest2 import TestCase
+from unittest import TestCase
 
 from pypackager.settings import SettingsReader
 from pypackager.base import BasePackager
