@@ -1,1 +1,1 @@
-__version__ = tuple(map(int, "0.0.5".split('.')))
+__version__ = tuple(map(int, "0.0.6".split('.')))
