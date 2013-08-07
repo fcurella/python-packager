@@ -56,6 +56,10 @@ Required. The author's full name
 ~~~~~~~~~~~~~~~~~~
 Required. The author's email.
 
+``--force``
+~~~~~~~~~~~
+Deletes and recreate the package dir if it's already existing.
+
 ``--license``
 ~~~~~~~~~~~~~
 (alias of ``--license-type``)
