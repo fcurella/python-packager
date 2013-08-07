@@ -34,6 +34,17 @@ class PackagerChannel(BasePackager):
         return json.loads(response.read())
 
     @property
+    def installed_list(self):
+        templates = [d for d in os.listdir(self.templates_dir) if os.path.isdir(os.path.join(self.templates_dir, d))]
+        templates.sort()
+        return templates
+
+    def installed(self):
+        for name in self.installed_list:
+            print(name)
+        print("%d templates installed." % len(self.installed_list))
+
+    @property
     def template_list(self):
         return self.data.keys()
 

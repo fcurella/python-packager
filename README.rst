@@ -128,6 +128,12 @@ Lists available templates on the index whose name contains the specified text.
 Downloads the specified template to your ``~/.pypackager/`` directory.
 
 If a URL is specified, downloads the template from there instead of using the index.
+
+``installed``
+~~~~~~~~~~~~~
+
+Lists templates that are already been downloaded.
+
 ``remove``
 ~~~~~~~~~~
 

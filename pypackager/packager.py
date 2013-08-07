@@ -18,6 +18,10 @@ class Pypackager(object):
         creator = PackageCreator(settings=self.settings)
         creator.create(package_name, destination)
 
+    def installed(self, *args):
+        channel = PackagerChannel(settings=self.settings)
+        channel.installed()
+
     def list(self, *args):
         channel = PackagerChannel(settings=self.settings)
         channel.list()
