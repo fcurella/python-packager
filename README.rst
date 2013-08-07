@@ -70,11 +70,7 @@ Required. The organization licensing the code. Most of the time this will be the
 
 ``--template``
 ~~~~~~~~~~~~~~
-(alias of ``--template-dir``)
-
-``--template-dir``
-~~~~~~~~~~~~~~~~~~
-Optional. The template to use. Can be directory on the filesystem, or the name of an installed template. By default is uses the ``python-package`` template shipped with Python Packager.
+Optional. The template to use. Can be a directory on the filesystem, a URL pointing to a zip or tarball archive, or the name of an installed template. By default is uses the ``python-package`` template shipped with Python Packager.
 
 The rendering context will contain every setting specified, plus a ``package_name`` variable containing the package name.
 
@@ -105,7 +101,7 @@ The following commands are available::
 
     $ pypackager list
     $ pypackager search <text>
-    $ pypackager download <package_name>
+    $ pypackager add <package_name> [<url>]
     $ pypackager remove <package_name>
 
 Commands
@@ -114,12 +110,12 @@ Commands
 ``list``
 ~~~~~~~~
 
-Lists all available templates.
+Lists all templates available on the index.
 
 ``search``
 ~~~~~~~~~~
 
-Lists available templates whose name contains the specified text.
+Lists available templates on the index whose name contains the specified text.
 
 ``download``
 ~~~~~~~~~~~~
@@ -136,6 +132,7 @@ Options
 
 ``--index``
 ~~~~~~~~~~~
+
 Optional. Specifies an alternative index to use.
 
 Status

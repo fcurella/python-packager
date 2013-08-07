@@ -14,6 +14,8 @@ parser.add_option("--author-name", dest="author-name",
                   help="")
 parser.add_option("--author-email-address", dest="author-email",
                   help="")
+parser.add_option("--force", dest="force",
+                  help="", action="store_true", default=False)
 parser.add_option("--index", dest="index",
                   help="", default=DEFAULTS['index'])
 parser.add_option("--license", dest="license-type",

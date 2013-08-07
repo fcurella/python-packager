@@ -3,11 +3,6 @@ import json
 import os
 import shutil
 try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-
-try:
     from urllib2 import urlopen
 except ImportError:
     from urllib.request import urlopen
@@ -22,8 +17,10 @@ class PackagerChannel(BasePackager):
 
     def __init__(self, settings):
         super(PackagerChannel, self).__init__(settings)
-        self.support_dir = self.settings['support_dir']
+        self.templates_dir = settings['templates_dir']
         self.channel_url = settings['index']
+        if not os.path.exists(self.templates_dir):
+            os.makedirs(self.templates_dir)
 
     @property
     def data(self):
@@ -52,7 +49,12 @@ class PackagerChannel(BasePackager):
             if text in name:
                 print(self.template_info(name, info))
 
+    def template_path(self, template_name):
+        return os.path.join(self.templates_dir, template_name, self.settings['template_wrap_dir'])
+
     def template_data(self, template_name):
+        if template_name not in self.data:
+            raise RuntimeError("Template '%s' not found." % template_name)
         return self.data[template_name]
 
     def template_url(self, template_name):
@@ -64,21 +66,15 @@ class PackagerChannel(BasePackager):
     def template_author(self, template_name):
         return self.template_data(template_name)['author']
 
-    def download(self, template_name):
-        url = self.template_url(template_name)
-        download_dir = os.path.join(self.support_dir, template_name)
-        os.makedirs(download_dir)
-        if url.startswith('http'):
-            print("Downloading '%s' from %s into %s" % (template_name, url, download_dir))
-            self.download_http(template_name, url, download_dir)
-
-    def download_http(self, template_name, url, download_dir):
-        response = StringIO(urlopen(url).read())
-        extractor = PackageExtractor(settings=self.settings, url=url, response=response, template_name=template_name)
-        extractor.extract(download_dir)
+    def download(self, template_name, url=None):
+        if url is None:
+            url = self.template_url(template_name)
+        destination = os.path.join(self.templates_dir, template_name)
+        extractor = PackageExtractor(url=url, template_name=template_name)
+        extractor.extract(destination)
 
     def remove(self, template_name):
-        template_dir = os.path.join(self.support_dir, template_name)
+        template_dir = os.path.join(self.templates_dir, template_name)
         if os.path.exists(template_dir):
             shutil.rmtree(template_dir)
         else:

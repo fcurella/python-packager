@@ -5,63 +5,131 @@ except ImportError:
 import os
 
 from .constants import LICENSES
+from .loaders import URLLoader, FileSystemLoader, ChannelLoader
 from .utils import clean_dict, recursive_update
 
 DEFAULTS = {
+    'config_file': os.path.expanduser('~/.pypackager/pypackager.cfg'),
     'template': {
         'dir': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template'),
         'syntax': 'pystache'
     },
-    'index': 'https://raw.github.com/fcurella/pypackager-channel/master/index.json'
+    'index': 'https://raw.github.com/fcurella/pypackager-channel/master/index.json',
+    'template-loaders': (
+        URLLoader,
+        FileSystemLoader,
+        ChannelLoader
+    ),
+    'templates_dir': os.path.join(os.path.expanduser('~/.pypackager'), 'templates'),
+    'template_wrap_dir': 'template',
+    'support_dir': os.path.expanduser('~/.pypackager'),
 }
+
+
+
+class RecursiveDict(dict):
+    def recursive_update(self, kwargs):
+        self = recursive_update(self, clean_dict(kwargs))
+        return self
+
+
+class SettingsLoader(RecursiveDict):
+    def parse(self, config_file):
+        kwargs = {}
+        parser = SafeConfigParser()
+
+        if os.path.exists(config_file):
+            with open(config_file) as fh:
+                parser.readfp(fh)
+
+            for section in parser.sections():
+                kwargs[section] = recursive_update(kwargs.get(section, {}), dict(parser.items(section)))
+
+        if 'license' in kwargs and 'type' in kwargs['license']:
+            license_shortname = kwargs['license']['type']
+            if license_shortname in LICENSES:
+                kwargs['license']['classifier'] = LICENSES[license_shortname]
+                kwargs['license']['name'] = LICENSES[license_shortname].split('::')[-1].strip()
+            else:
+                kwargs['license']['classifier'] = LICENSES['other']
+                kwargs['license']['name'] = license_shortname
+
+        return kwargs
+
+
+class DefaultsLoader(SettingsLoader):
+    def __init__(self):
+        super(DefaultsLoader, self).__init__(**DEFAULTS)
+
+
+class UserSettingLoader(SettingsLoader):
+    config_file = DEFAULTS['config_file']
+
+    def __init__(self, config_file=None):
+        if config_file is not None:
+            self.config_file = config_file
+
+        kwargs = self.parse(self.config_file)
+
+        super(UserSettingLoader, self).__init__(**kwargs)
+
+
+class TemplateSettingLoader(SettingsLoader):
+    templates_dir = DEFAULTS['templates_dir']
+
+    def __init__(self, template, loaders, settings):
+        kwargs = {}
+
+        if 'templates_dir' not in settings:
+            settings['templates_dir'] = self.templates_dir
+
+        template_dir = None
+        for Loader in loaders:
+            loader = Loader(settings, template)
+            if loader.template_exists():
+                template_dir = loader.template_path()
+                break
+
+        package_cfg = os.path.join(template_dir, '.package.cfg')
+        kwargs = self.parse(package_cfg)
+        super(TemplateSettingLoader, self).__init__(**kwargs)
+
+
+class CommandLineSettingLoader(SettingsLoader):
+    pass
 
 
 class SettingsReader(dict):
     support_dir = os.path.expanduser('~/.pypackager')
-    config_file = os.path.expanduser('~/.pypackager/pypackager.cfg')
 
     def __init__(self, config_file=None, *args, **kwargs):
-        if config_file:
-            self.config_file = config_file
-        parser = SafeConfigParser()
+        _kwargs = RecursiveDict()
 
-        _kwargs = {
-            'support_dir': self.support_dir,
-            'template_wrap_dir': 'template'
+        defaults = DefaultsLoader()
+        command_line = CommandLineSettingLoader(**kwargs)
+        user = UserSettingLoader(config_file)
+
+        if 'index' in command_line:
+            index = command_line['index']
+        else:
+            index = defaults['index']
+
+        template_loader_settings = {
+            'index': index,
+            'template_wrap_dir': DEFAULTS['template_wrap_dir'],
+            'support_dir': DEFAULTS['support_dir']
         }
 
-        if 'template' in _kwargs and 'dir' in _kwargs['template']:
-            template = _kwargs['template']['dir']
-            if os.path.exists(template):
-                template_dir = template
-            elif os.path.exists(os.path.join(self.support_dir, template)):
-                template_dir = os.path.join(self.support_dir, template, _kwargs['template_wrap_dir'])
-            else:
-                raise OSError("template %s does not exist." % template)
+        if 'template' in command_line and 'dir' in command_line['template']:
+            template_dir = command_line['template']['dir']
+        else:
+            template_dir = defaults['template']['dir']
 
-            package_cfg = os.path.join(template_dir, '.package.cfg')
-            if os.path.exists(package_cfg):
-                with open(package_cfg) as fh:
-                    parser.readfp(fh)
-                for section in parser.sections():
-                    _kwargs[section] = recursive_update(_kwargs.get(section, {}), dict(parser.items(section)))
+        template = TemplateSettingLoader(template_dir, defaults['template-loaders'], template_loader_settings)
 
-        if 'license' in _kwargs and 'type' in _kwargs['license']:
-            license_shortname = _kwargs['license']['type']
-            if license_shortname in LICENSES:
-                _kwargs['license']['classifier'] = LICENSES[license_shortname]
-                _kwargs['license']['name'] = LICENSES[license_shortname].split('::')[-1].strip()
-            else:
-                _kwargs['license']['classifier'] = LICENSES['other']
-                _kwargs['license']['name'] = license_shortname
-
-        if os.path.exists(self.config_file):
-            with open(self.config_file) as fh:
-                parser.readfp(fh)
-
-            for section in parser.sections():
-                _kwargs[section] = recursive_update(_kwargs.get(section, {}), dict(parser.items(section)))
-
-        _kwargs.update(clean_dict(kwargs))
+        _kwargs.recursive_update(defaults)
+        _kwargs.recursive_update(template)
+        _kwargs.recursive_update(user)
+        _kwargs.recursive_update(command_line)
 
         super(SettingsReader, self).__init__(**_kwargs)

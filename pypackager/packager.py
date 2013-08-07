@@ -28,7 +28,7 @@ class Pypackager(object):
 
     def download(self, package_name, *args):
         channel = PackagerChannel(settings=self.settings)
-        channel.download(package_name)
+        channel.download(package_name, *args)
 
     def remove(self, package_name, *args):
         channel = PackagerChannel(settings=self.settings)
