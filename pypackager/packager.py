@@ -30,9 +30,9 @@ class Pypackager(object):
         channel = PackagerChannel(settings=self.settings)
         channel.search(text)
 
-    def download(self, package_name, *args):
+    def add(self, package_name, *args):
         channel = PackagerChannel(settings=self.settings)
-        channel.download(package_name, *args)
+        channel.add(package_name, *args)
 
     def remove(self, package_name, *args):
         channel = PackagerChannel(settings=self.settings)

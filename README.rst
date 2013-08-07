@@ -122,7 +122,7 @@ Lists all templates available on the index.
 
 Lists available templates on the index whose name contains the specified text.
 
-``download``
+``add``
 ~~~~~~~~~~~~
 
 Downloads the specified template to your ``~/.pypackager/`` directory.

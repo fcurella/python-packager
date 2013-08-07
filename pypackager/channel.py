@@ -77,7 +77,7 @@ class PackagerChannel(BasePackager):
     def template_author(self, template_name):
         return self.template_data(template_name)['author']
 
-    def download(self, template_name, url=None):
+    def add(self, template_name, url=None):
         if url is None:
             url = self.template_url(template_name)
         destination = os.path.join(self.templates_dir, template_name)
