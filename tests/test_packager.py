@@ -14,7 +14,7 @@ class OptionsTests(TestCase):
 
         settings = SettingsReader(config_file=config_path, author={'name': 'John Brown'})
         self.assertEqual(settings['author']['name'], 'John Brown')
-        self.assertFalse('email' in settings['author'])
+        self.assertTrue('email' in settings['author'])
 
         package = BasePackager(settings=settings)
         self.assertEqual(package.settings['author']['name'], 'John Brown')
