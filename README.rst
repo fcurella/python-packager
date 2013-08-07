@@ -132,7 +132,7 @@ If a URL is specified, downloads the template from there instead of using the in
 ``installed``
 ~~~~~~~~~~~~~
 
-Lists templates that are already been downloaded.
+Lists templates that have already been downloaded.
 
 ``remove``
 ~~~~~~~~~~
