@@ -21,7 +21,7 @@ sys.dont_write_bytecode = True
 
 setup(
     name="python-packager",
-    version="0.0.8",
+    version="0.0.9",
     description="A command-line tool to create Python Packages.",
     long_description=read('README.rst'),
     url='https://github.com/fcurella/python-packager',
