@@ -9,7 +9,7 @@ from .exceptions import DestinationExists
 
 
 class PackageCreator(BasePackager):
-    blacklist = ('.package.cfg',)
+    blacklist = ('.package.cfg', '.DS_Store')
 
     def __init__(self, **kwargs):
         super(PackageCreator, self).__init__(**kwargs)
