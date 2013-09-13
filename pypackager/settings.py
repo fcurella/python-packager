@@ -19,9 +19,9 @@ DEFAULTS = {
     'index': 'https://raw.github.com/fcurella/pypackager-channel/master/index.json',
     'template-loaders': (
         URLLoader,
-        FileSystemLoader,
         ChannelLoader,
         HgLoader,
+        FileSystemLoader,
         ChannelLoader,
     ),
     'templates_dir': os.path.join(os.path.expanduser('~/.pypackager'), 'templates'),
