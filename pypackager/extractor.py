@@ -82,25 +82,21 @@ class PackageExtractor(BasePackager):
         self.url = url
         super(PackageExtractor, self).__init__(settings)
 
-    def download(self):
-        response = Downloader.download(self.url)
+    def download(self, url):
+        response = Downloader.download(url)
 
-        if self.url.endswith('.zip'):
+        if url.endswith('.zip'):
             self.archive = ZipFileWrapper(response, self.template_name)
-        elif self.url.endswith('.tgz'):
+        elif url.endswith('.tgz'):
             self.archive = TarFileWrapper(response, self.template_name)
-        elif self.url.endswith('.tar.gz'):
+        elif url.endswith('.tar.gz'):
             self.archive = TarFileWrapper(response, self.template_name)
 
-    def get_extract_dir(self):
-        return os.path.join(self.settings['support_dir'], 'CACHE', self.template_name)
-
-    def extract(self, destination=None, archive=None):
-        if destination is None:
-            self.extract_dir = destination = self.get_extract_dir()
+    def extract(self, destination, archive=None):
+        self.extract_dir = destination
 
         if not os.path.exists(destination):
-            self.download()
+            self.download(self.url)
 
             os.makedirs(destination)
             if archive is None:

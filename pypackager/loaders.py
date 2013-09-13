@@ -20,15 +20,24 @@ class GenericTemplateLoader(BasePackager):
         pass
 
 
-class URLLoader(GenericTemplateLoader):
+class FetchLoader(GenericTemplateLoader):
+    def get_extract_dir(self, template_name):
+        return os.path.join(self.settings['support_dir'], 'CACHE', template_name)
+
+    def get_template_name(self, template):
+        return template.rsplit('/', 1)[-1].rsplit('.', 1)[0]
+
+
+class URLLoader(FetchLoader):
     def template_exists(self):
         return self.template.startswith('http')
 
     def template_path(self):
-        template_name = self.template.rsplit('/', 1)[-1].rsplit('.', 1)[0]
+        template_name = self.get_template_name(self.template)
+        destination = self.get_extract_dir(template_name)
         self.extractor = PackageExtractor(self.settings, url=self.template, template_name=template_name)
-        self.extractor.extract()
-        return self.extractor.extract_dir
+        self.extractor.extract(destination)
+        return destination
 
     def cleanup(self):
         self.extractor.cleanup()
