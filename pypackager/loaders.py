@@ -55,7 +55,8 @@ class VCSLoader(FetchLoader):
     def template_path(self):
         template_name = self.get_template_name(self.template)
         destination = self.get_extract_dir(template_name)
-        subprocess.check_call([self.command, 'clone', self.template], cwd=destination)
+        url = self.template.split('+', 1)[1]
+        subprocess.check_call([self.command, 'clone', url], cwd=destination)
         return destination
 
     def cleanup(self):
