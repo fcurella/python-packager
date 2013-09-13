@@ -31,7 +31,7 @@ class PackagerChannel(BasePackager):
 
     def fetch(self):
         response = urlopen(self.channel_url)
-        return json.loads(response.read())
+        return json.load(response)
 
     @property
     def installed_list(self):
