@@ -1,4 +1,6 @@
 import os
+import shutil
+import subprocess
 
 from .base import BasePackager
 from .channel import PackagerChannel
@@ -41,6 +43,33 @@ class URLLoader(FetchLoader):
 
     def cleanup(self):
         self.extractor.cleanup()
+
+
+class VCSLoader(FetchLoader):
+    scheme = None
+    command = None
+
+    def template_exists(self):
+        return self.template.startswith(self.scheme + '+')
+
+    def template_path(self):
+        template_name = self.get_template_name(self.template)
+        destination = self.get_extract_dir(template_name)
+        subprocess.check_call([self.command, 'clone', self.template], cwd=destination)
+        return destination
+
+    def cleanup(self):
+        shutil.rmtree(self.template)
+
+
+class GitLoader(VCSLoader):
+    scheme = 'git'
+    command = 'git'
+
+
+class HgLoader(VCSLoader):
+    scheme = 'hg'
+    command = 'hg'
 
 
 class FileSystemLoader(GenericTemplateLoader):

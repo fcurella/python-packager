@@ -5,7 +5,9 @@ except ImportError:
 import os
 
 from .constants import LICENSES
-from .loaders import URLLoader, FileSystemLoader, ChannelLoader
+from .loaders import (
+    URLLoader, FileSystemLoader, GitLoader, HgLoader, ChannelLoader
+)
 from .utils import clean_dict, recursive_update
 
 DEFAULTS = {
@@ -18,7 +20,9 @@ DEFAULTS = {
     'template-loaders': (
         URLLoader,
         FileSystemLoader,
-        ChannelLoader
+        ChannelLoader,
+        HgLoader,
+        ChannelLoader,
     ),
     'templates_dir': os.path.join(os.path.expanduser('~/.pypackager'), 'templates'),
     'template_wrap_dir': 'template',
