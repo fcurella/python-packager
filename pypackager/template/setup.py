@@ -24,8 +24,8 @@ setup(
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     classifiers=[
-        'Development Status :: 3 - Alpha',{{#license.classifier}}
-        '{{ license.classifier }}',{{/license.classifier}}
+        'Development Status :: 3 - Alpha',{{#license}}
+        '{{ classifier }}',{{/license}}
         'Programming Language :: Python',
     ],
     install_requires=requirements,
