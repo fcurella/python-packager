@@ -1,11 +1,11 @@
 language: python
 install:
-  - pip install -r REQUIREMENTS --use-mirrors
-  - pip install -r TEST-REQUIREMENTS --use-mirrors
+  - pip install -r REQUIREMENTS
+  - pip install -r TEST-REQUIREMENTS
 before_script:
   - "pip install ."
 python:
-  - "2.6"
   - "2.7"
-  - "3.3"
+  - "3.4"
+  - "3.5"
 script: py.test tests/test_*.py
